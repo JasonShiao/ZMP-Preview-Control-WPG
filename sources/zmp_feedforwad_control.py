@@ -32,8 +32,8 @@ def calc_preview_control(zmp_x, zmp_y, dt, t_preview, t_calc, A_d, B_d, C_d, Gi,
     com_y = []
 
     for i in range(0, int(t_calc/dt)):
-        y_x = np.asscalar(C_d.dot(x_x))
-        y_y = np.asscalar(C_d.dot(x_y))
+        y_x = np.ndarray.item(C_d.dot(x_x))
+        y_y = np.ndarray.item(C_d.dot(x_y))
         e_x = zmp_x[i] - y_x
         e_y = zmp_y[i] - y_y
 
@@ -45,8 +45,8 @@ def calc_preview_control(zmp_x, zmp_y, dt, t_preview, t_calc, A_d, B_d, C_d, Gi,
             preview_y += Gd[0, n] * zmp_y[j]
             n += 1
 
-        u_x = np.asscalar(-Gi * e_x - Gx.dot(x_x) - preview_x)
-        u_y = np.asscalar(-Gi * e_y - Gx.dot(x_y) - preview_y)
+        u_x = np.ndarray.item(-Gi * e_x - Gx.dot(x_x) - preview_x)
+        u_y = np.ndarray.item(-Gi * e_y - Gx.dot(x_y) - preview_y)
         
         x_x = A_d.dot(x_x) + B_d * u_x 
         x_y = A_d.dot(x_y) + B_d * u_y
@@ -60,13 +60,13 @@ def main():
     print("ZMP Preview Control Simulation")
     wpg_param = scipy.io.loadmat('wpg_parameter.mat')
     A_d = wpg_param['A_d']
-    zc = np.asscalar(wpg_param['zc'])
-    dt = np.asscalar(wpg_param['dt'])
-    t_preview = np.asscalar(wpg_param['t_preview'])
+    zc = np.ndarray.item(wpg_param['zc'])
+    dt = np.ndarray.item(wpg_param['dt'])
+    t_preview = np.ndarray.item(wpg_param['t_preview'])
     A_d = wpg_param['A_d']
     B_d = wpg_param['B_d']
     C_d = wpg_param['C_d']
-    Gi = np.asscalar(wpg_param['Gi'])
+    Gi = np.ndarray.item(wpg_param['Gi'])
     Gx = wpg_param['Gx']
     Gd = wpg_param['Gd']
 
